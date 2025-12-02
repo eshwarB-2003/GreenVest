@@ -1,11 +1,11 @@
 package com.greenvest.model;
 
 import com.greenvest.common.Preconditions;
+
 import java.time.LocalDateTime;
 
 /**
- * Receipt generated after a successful trade.
- * Uses immutability and preconditions (SOLID).
+ * UUID-based digital receipt.
  */
 public class Receipt {
 
@@ -14,14 +14,12 @@ public class Receipt {
     private final LocalDateTime generatedAt;
 
     /**
-     * @pre tradeId != null && !tradeId.isBlank()
-     * @pre generatedAt != null
+     * @pre tradeId != null
      */
     public Receipt(String id, String tradeId, LocalDateTime generatedAt) {
-        Preconditions.requireNonNull(id, "receipt id must not be null");
-        Preconditions.require(!tradeId.isBlank(), "trade id must not be blank");
+        Preconditions.requireNonNull(id, "id must not be null");
+        Preconditions.requireNonNull(tradeId, "tradeId must not be null");
         Preconditions.requireNonNull(generatedAt, "generatedAt must not be null");
-
         this.id = id;
         this.tradeId = tradeId;
         this.generatedAt = generatedAt;
@@ -37,16 +35,5 @@ public class Receipt {
 
     public LocalDateTime getGeneratedAt() {
         return generatedAt;
-    }
-
-    @Override
-    public String toString() {
-        return """
-                Receipt:
-                -----------------
-                Receipt ID: %s
-                Trade ID: %s
-                Generated On: %s
-                """.formatted(id, tradeId, generatedAt);
     }
 }
