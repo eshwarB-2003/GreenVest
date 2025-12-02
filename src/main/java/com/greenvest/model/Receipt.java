@@ -1,39 +1,23 @@
 package com.greenvest.model;
 
-import com.greenvest.common.Preconditions;
+public class Receipt extends BaseEntity {
 
-import java.time.LocalDateTime;
+    private String transactionId;
+    private String rawText;
 
-/**
- * UUID-based digital receipt.
- */
-public class Receipt {
-
-    private final String id;
-    private final String tradeId;
-    private final LocalDateTime generatedAt;
-
-    /**
-     * @pre tradeId != null
-     */
-    public Receipt(String id, String tradeId, LocalDateTime generatedAt) {
-        Preconditions.requireNonNull(id, "id must not be null");
-        Preconditions.requireNonNull(tradeId, "tradeId must not be null");
-        Preconditions.requireNonNull(generatedAt, "generatedAt must not be null");
-        this.id = id;
-        this.tradeId = tradeId;
-        this.generatedAt = generatedAt;
+    public Receipt() {
     }
 
-    public String getId() {
-        return id;
+    public Receipt(String transactionId, String rawText) {
+        this.transactionId = transactionId;
+        this.rawText = rawText;
     }
 
-    public String getTradeId() {
-        return tradeId;
+    public String getTransactionId() {
+        return transactionId;
     }
 
-    public LocalDateTime getGeneratedAt() {
-        return generatedAt;
+    public String getRawText() {
+        return rawText;
     }
 }

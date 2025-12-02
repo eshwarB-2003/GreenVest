@@ -1,4 +1,8 @@
 package com.greenvest.patterns.interceptor;
 
-public class Interceptor {
+public interface Interceptor {
+
+    void before();
+
+    void after();
 }

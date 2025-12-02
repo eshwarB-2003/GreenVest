@@ -1,4 +1,8 @@
 package com.greenvest.patterns.state;
 
-public class CreditState {
+import com.greenvest.model.CarbonCredit;
+
+public interface CreditState {
+
+    void handle(CarbonCredit credit);
 }

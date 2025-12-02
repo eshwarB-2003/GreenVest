@@ -1,4 +1,8 @@
 package com.greenvest.model;
 
-public class ListingStatus {
+public enum ListingStatus {
+    PENDING_APPROVAL,
+    ACTIVE,
+    SUSPENDED,
+    CLOSED
 }

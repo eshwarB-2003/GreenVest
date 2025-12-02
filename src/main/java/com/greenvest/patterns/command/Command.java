@@ -1,4 +1,6 @@
 package com.greenvest.patterns.command;
 
-public class Command {
+public interface Command {
+
+    void execute();
 }

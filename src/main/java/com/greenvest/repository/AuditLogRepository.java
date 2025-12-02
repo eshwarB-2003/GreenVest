@@ -1,4 +1,12 @@
 package com.greenvest.repository;
 
-public class AuditLogRepository {
+import com.greenvest.model.AuditLogEntry;
+
+import java.util.List;
+
+public interface AuditLogRepository {
+
+    AuditLogEntry save(AuditLogEntry entry);
+
+    List<AuditLogEntry> findAll();
 }

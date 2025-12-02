@@ -1,4 +1,4 @@
 package com.greenvest.rules;
 
-public class ExpiryRule {
+public interface ExpiryRule extends Rule {
 }

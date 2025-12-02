@@ -1,51 +1,62 @@
 package com.greenvest.service;
 
-import com.greenvest.common.IdGenerator;
 import com.greenvest.common.Preconditions;
-import com.greenvest.model.*;
-import com.greenvest.patterns.CreditFactory;
+import com.greenvest.model.CreditListing;
+import com.greenvest.model.ListingStatus;
+import com.greenvest.model.Transaction;
+import com.greenvest.repository.CreditListingRepository;
+import com.greenvest.repository.TransactionRepository;
 
-import java.time.LocalDate;
-import java.util.*;
+import java.util.List;
 
-/**
- * Very simple in-memory marketplace service.
- * This will later be refactored into BrokerService, TradeService, etc.
- */
 public class MarketplaceService {
 
-    private final Map<String, SME> smes = new HashMap<>();
-    private final Map<String, Credit> credits = new HashMap<>();
-    private final CreditFactory creditFactory = new CreditFactory();
+    private final CreditListingRepository listingRepository;
+    private final TransactionRepository transactionRepository;
 
-    public SME registerSme(String name, String email) {
-        Preconditions.require(!name.isBlank(), "name must not be blank");
-        Preconditions.require(!email.isBlank(), "email must not be blank");
-        String id = IdGenerator.newId();
-        SME sme = new SME(id, name, email);
-        smes.put(id, sme);
-        return sme;
+    public MarketplaceService(CreditListingRepository listingRepository,
+                              TransactionRepository transactionRepository) {
+        this.listingRepository = listingRepository;
+        this.transactionRepository = transactionRepository;
     }
 
-    public List<Credit> listAllCredits() {
-        return new ArrayList<>(credits.values());
+    public List<CreditListing> getActiveListings() {
+        return listingRepository.findActiveListings();
     }
 
-    public Credit submitCredit(String sellerId,
-                               double quantity,
-                               double basePrice,
-                               LocalDate expiryDate) {
-        Preconditions.requireNonNull(sellerId, "sellerId must not be null");
-        Preconditions.require(smes.containsKey(sellerId), "Unknown sellerId");
-        Credit credit = creditFactory.createPendingCredit(sellerId, quantity, basePrice, expiryDate);
-        credits.put(credit.getId(), credit);
-        return credit;
-    }
+    public Transaction purchase(String buyerId, String listingId, int quantity) {
+        Preconditions.requireNonBlank(buyerId, "buyerId is required");
+        Preconditions.requireNonBlank(listingId, "listingId is required");
+        Preconditions.require(quantity > 0, "Quantity must be positive");
 
-    public void verifyCredit(String creditId) {
-        Credit credit = credits.get(creditId);
-        Preconditions.requireNonNull(credit, "credit not found");
-        credit.verify();
+        CreditListing listing = listingRepository.findById(listingId)
+                .orElseThrow(() -> new IllegalArgumentException("Listing not found"));
+
+        if (listing.getStatus() != ListingStatus.ACTIVE) {
+            throw new IllegalStateException("Listing is not active");
+        }
+
+        if (quantity > listing.getQuantity()) {
+            throw new IllegalArgumentException("Not enough quantity in listing");
+        }
+
+        double totalAmount = quantity * listing.getPricePerCredit();
+
+        Transaction tx = new Transaction(
+                buyerId,
+                listing.getSellerId(),
+                listing.getId(),
+                quantity,
+                totalAmount
+        );
+        transactionRepository.save(tx);
+
+        int remaining = listing.getQuantity() - quantity;
+        if (remaining == 0) {
+            listing.setStatus(ListingStatus.CLOSED);
+        }
+        listingRepository.save(listing);
+
+        return tx;
     }
 }
-

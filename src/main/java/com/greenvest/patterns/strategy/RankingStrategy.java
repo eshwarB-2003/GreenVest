@@ -1,4 +1,6 @@
 package com.greenvest.patterns.strategy;
 
-public class RankingStrategy {
+public interface RankingStrategy {
+
+    int compare(String sellerIdA, String sellerIdB);
 }

@@ -1,4 +1,9 @@
 package com.greenvest.model;
 
-public class SustainabilityActionStatus {
+public enum SustainabilityActionStatus {
+    DRAFT,
+    SUBMITTED,
+    UNDER_REVIEW,
+    APPROVED,
+    REJECTED
 }

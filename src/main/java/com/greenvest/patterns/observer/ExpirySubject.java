@@ -1,4 +1,10 @@
 package com.greenvest.patterns.observer;
 
-public class ExpirySubject {
+public interface ExpirySubject {
+
+    void addObserver(ExpiryObserver observer);
+
+    void removeObserver(ExpiryObserver observer);
+
+    void notifyObservers();
 }

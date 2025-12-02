@@ -1,4 +1,6 @@
 package com.greenvest.patterns.strategy;
 
-public class PricingStrategy {
+public interface PricingStrategy {
+
+    double apply(double basePrice);
 }

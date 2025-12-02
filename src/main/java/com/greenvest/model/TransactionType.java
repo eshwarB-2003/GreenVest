@@ -1,4 +1,5 @@
 package com.greenvest.model;
 
-public class TransactionType {
+public enum TransactionType {
+    PURCHASE
 }

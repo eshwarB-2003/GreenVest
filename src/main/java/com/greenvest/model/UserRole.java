@@ -1,4 +1,7 @@
 package com.greenvest.model;
 
-public class UserRole {
+public enum UserRole {
+    ADMIN,
+    SELLER,
+    BUYER
 }

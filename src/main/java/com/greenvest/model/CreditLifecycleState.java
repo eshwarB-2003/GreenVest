@@ -1,4 +1,10 @@
 package com.greenvest.model;
 
-public class CreditLifecycleState {
+public enum CreditLifecycleState {
+    DRAFT,
+    PENDING_VERIFICATION,
+    VERIFIED,
+    LISTED,
+    SOLD,
+    EXPIRED
 }

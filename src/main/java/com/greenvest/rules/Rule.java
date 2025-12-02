@@ -1,4 +1,8 @@
 package com.greenvest.rules;
 
-public class Rule {
+public interface Rule {
+
+    String getName();
+
+    void apply(RuleContext context);
 }

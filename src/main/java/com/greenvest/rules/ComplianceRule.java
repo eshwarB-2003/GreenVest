@@ -1,4 +1,4 @@
 package com.greenvest.rules;
 
-public class ComplianceRule {
+public interface ComplianceRule extends Rule {
 }

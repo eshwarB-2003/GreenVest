@@ -1,4 +1,8 @@
 package com.greenvest.patterns.decorator;
 
-public class ReceiptFormatter {
+import com.greenvest.model.Transaction;
+
+public interface ReceiptFormatter {
+
+    String format(Transaction transaction);
 }

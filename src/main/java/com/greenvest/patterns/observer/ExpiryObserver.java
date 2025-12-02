@@ -1,4 +1,8 @@
 package com.greenvest.patterns.observer;
 
-public class ExpiryObserver {
+import com.greenvest.model.CarbonCredit;
+
+public interface ExpiryObserver {
+
+    void onExpiryEvent(CarbonCredit credit);
 }

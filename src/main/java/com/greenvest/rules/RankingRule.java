@@ -1,4 +1,4 @@
 package com.greenvest.rules;
 
-public class RankingRule {
+public interface RankingRule extends Rule {
 }
