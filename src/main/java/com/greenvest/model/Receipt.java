@@ -21,3 +21,4 @@ public class Receipt extends BaseEntity {
         return rawText;
     }
 }
+

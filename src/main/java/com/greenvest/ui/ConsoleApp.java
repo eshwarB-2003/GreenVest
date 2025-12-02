@@ -45,7 +45,7 @@ public class ConsoleApp {
         AdminController adminController = new AdminController(adminService);
         SellerController sellerController = new SellerController(sellerService);
         BuyerController buyerController = new BuyerController(buyerService);
-        MarketplaceController marketplaceController = new MarketplaceController(marketplaceService);
+        MarketplaceController marketplaceController = new MarketplaceController(marketplaceService,receiptService);
 
         // Ensure default admin user
         authController.ensureDefaultAdmin();

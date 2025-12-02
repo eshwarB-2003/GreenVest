@@ -47,17 +47,26 @@ public class MarketplaceController {
         this.receiptService = receiptService;
     }
 
+    // Called by BuyerMenu to show the marketplace
     public List<CreditListing> getAvailableListings() {
         return marketplaceService.getAvailableListings();
     }
 
+    // Called when buyer chooses to purchase
     public Transaction purchase(String buyerId, String listingId, int quantity) {
         return marketplaceService.purchase(buyerId, listingId, quantity);
     }
 
-    // Used by BuyerMenu to print the formatted receipt text
+    // Used to print a formatted receipt in the console
     public String getReceiptText(Transaction transaction) {
+        if (transaction == null) {
+            return "No transaction provided.";
+        }
         return receiptService.generateReceipt(transaction).getRawText();
     }
-}
 
+    // Optional helper: by transaction id (if you ever use it)
+    public String getReceiptTextById(String transactionId) {
+        return receiptService.getFormattedReceiptText(transactionId);
+    }
+}

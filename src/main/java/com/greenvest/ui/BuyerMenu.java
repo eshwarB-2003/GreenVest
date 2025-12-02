@@ -51,7 +51,7 @@ public class BuyerMenu {
         boolean back = false;
 
         while (!back) {
-            List<CreditListing> listings = marketplaceController.getMarketplaceListings();
+            List<CreditListing> listings = marketplaceController.getAvailableListings();
             System.out.println();
             System.out.println("--- Marketplace ---");
             if (listings.isEmpty()) {
